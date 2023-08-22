@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SellerSystem.Data;
+using SellerSystem.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -8,6 +9,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<SeedingService>();
+builder.Services.AddScoped<SellerService>();
 
 var app = builder.Build();
 
@@ -19,7 +21,9 @@ if (app.Environment.IsDevelopment())
     {
         var services = scope.ServiceProvider;
         var seedingService = services.GetRequiredService<SeedingService>();
-        seedingService.Seed(); // Chame o método que executa o seeding
+        seedingService.Seed();
+
+        
     }
 }
 else
